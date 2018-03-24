@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 /etc/apt/sources.list,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 /etc/yum.repos.d/下。 此文主要讲如何修改centos下如何修改yum源。因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将cen">
+    <meta name="description" content="前言众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 /etc/apt/sources.list,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 /etc/yum.repos.d/下。 此文主要讲如何修改centos下如何修改yum源。因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将c">
 <meta name="keywords" content="运维">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos7修改yum源">
 <meta property="og:url" content="http://yoursite.com/2018/03/24/centos7-yum/index.html">
 <meta property="og:site_name" content="理工青年Tech">
-<meta property="og:description" content="众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 /etc/apt/sources.list,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 /etc/yum.repos.d/下。 此文主要讲如何修改centos下如何修改yum源。因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将cen">
+<meta property="og:description" content="前言众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 /etc/apt/sources.list,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 /etc/yum.repos.d/下。 此文主要讲如何修改centos下如何修改yum源。因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-24T05:34:30.109Z">
+<meta property="og:updated_time" content="2018-03-24T06:05:39.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos7修改yum源">
-<meta name="twitter:description" content="众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 /etc/apt/sources.list,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 /etc/yum.repos.d/下。 此文主要讲如何修改centos下如何修改yum源。因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将cen">
+<meta name="twitter:description" content="前言众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 /etc/apt/sources.list,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 /etc/yum.repos.d/下。 此文主要讲如何修改centos下如何修改yum源。因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将c">
     
     
         
@@ -57,6 +57,8 @@
          
           <li><a href="/">Home</a></li>
          
+          <li><a href="/Search/">Search</a></li>
+         
           <li><a href="/archives/">Writing</a></li>
          
           <li><a href="/about/">About</a></li>
@@ -93,7 +95,7 @@
 
     </div>
     <div id="toc">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-备份原有配置文件"><span class="toc-number">2.</span> <span class="toc-text">1.备份原有配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-新建-CentOS-Base-repo"><span class="toc-number">3.</span> <span class="toc-text">2.新建 CentOS-Base.repo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-生成缓存"><span class="toc-number">4.</span> <span class="toc-text">3.生成缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-其他的源："><span class="toc-number">5.</span> <span class="toc-text">4.其他的源：</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -132,16 +134,18 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 <code>/etc/apt/sources.list</code>,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 <code>/etc/yum.repos.d/</code>下。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>众所周知，dedian系（其中最出名的发行版是ubuntu）的包管理工具是 apt,源配置文件是 <code>/etc/apt/sources.list</code>,redhat系（最出名的应该是centos）的包管理工具是yum, 源配置文件在文件夹 <code>/etc/yum.repos.d/</code>下。</p>
 <p>此文主要讲如何修改centos下如何修改yum源。<br>因为国内网络情况，导致很多网站不能正常访问或者访问十分缓慢，所以我们需要将centos原本的官方源修改为国内镜像源，以提高访问速度。<br>ps: 目前很多服务商在自家云服务器上已经默认将源设置为自家源。</p>
 <p>例如，我在腾讯云的这台服务器, <code>/etc/yum.repos.d/CentOS-Base.repo</code> 的内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[extras]</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line">enabled=1</span><br><span class="line">baseurl=http://mirrors.tencentyun.com/centos/$releasever/extras/$basearch/</span><br><span class="line">name=Qcloud centos extras - $basearch</span><br><span class="line">[os]</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line">enabled=1</span><br><span class="line">baseurl=http://mirrors.tencentyun.com/centos/$releasever/os/$basearch/</span><br><span class="line">name=Qcloud centos os - $basearch</span><br><span class="line">[updates]</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://mirrors.tencentyun.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line">enabled=1</span><br><span class="line">baseurl=http://mirrors.tencentyun.com/centos/$releasever/updates/$basearch/</span><br><span class="line">name=Qcloud centos updates - $basearch</span><br></pre></td></tr></table></figure></p>
 <p>可以看到repo的baseurl指向域名<a href="http://mirrors.tencentyun.com" target="_blank" rel="noopener">http://mirrors.tencentyun.com</a>, 尝试访问发现无法访问，即只允许内网访问。腾讯开放的软件源地址<a href="https://mirrors.cloud.tencent.com/" target="_blank" rel="noopener">https://mirrors.cloud.tencent.com/</a> 。 </p>
 <p>接下来，开始正文，如何修改源<br>以中国科技大学源为例子，地址为<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">USTC Open Source Software Mirror</a>,在列表中找到centos，点击右侧的help,查看详细步骤。</p>
-<p>1.第一步当然是备份，备份是个好习惯，尤其是大幅度修改配置文件的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br></pre></td></tr></table></figure></p>
-<p>ps:非root用户记得使用sudo<br>2.新建 CentOS-Base.repo<br>此处我使用vim,如果未自带vim，可以使用vi ,查看 vi命令_Linux <a href="http://man.linuxde.net/vi" target="_blank" rel="noopener">vi 命令用法详解：功能强大的纯文本编辑器</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim CentOS-Base.repo  #不存在此文件，vim将自动创建</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-备份原有配置文件"><a href="#1-备份原有配置文件" class="headerlink" title="1.备份原有配置文件"></a>1.备份原有配置文件</h2><p>第一步当然是备份，备份是个好习惯，尤其是<code>大幅度修改配置文件的时候</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br></pre></td></tr></table></figure></p>
+<p>ps:非root用户记得使用sudo</p>
+<h2 id="2-新建-CentOS-Base-repo"><a href="#2-新建-CentOS-Base-repo" class="headerlink" title="2.新建 CentOS-Base.repo"></a>2.新建 CentOS-Base.repo</h2><p>此处我使用vim,如果未自带vim，可以使用vi ,查看 vi命令_Linux <a href="http://man.linuxde.net/vi" target="_blank" rel="noopener">vi 命令用法详解：功能强大的纯文本编辑器</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim CentOS-Base.repo  #不存在此文件，vim将自动创建</span><br></pre></td></tr></table></figure></p>
 <p>我们在 USTC Mirror Help 中找到centos 7对应的 repo 内容，复制下来，粘贴到刚才创建的文件中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line"># mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line"># mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line"># mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure></p>
-<p>保存文件。<br>3.运行 <code>sudo yum makecache</code> 生成缓存,之后就可以yum install之类的操作了。</p>
-<p>4.其他的源：<br><a href="https://mirrors.tuna.tsinghua.edu.cn/" target="_blank" rel="noopener">Tsinghua Open Source Mirror</a><br><a href="https://opsx.alibaba.com/mirror" target="_blank" rel="noopener">OPSX</a> 即阿里源</p>
+<p>保存文件。</p>
+<h2 id="3-生成缓存"><a href="#3-生成缓存" class="headerlink" title="3.生成缓存"></a>3.生成缓存</h2><p>运行 <code>sudo yum makecache</code> 生成缓存,之后就可以yum install之类的操作了。</p>
+<h2 id="4-其他的源："><a href="#4-其他的源：" class="headerlink" title="4.其他的源："></a>4.其他的源：</h2><p><a href="https://mirrors.tuna.tsinghua.edu.cn/" target="_blank" rel="noopener">Tsinghua Open Source Mirror</a><br><a href="https://opsx.alibaba.com/mirror" target="_blank" rel="noopener">OPSX</a> 即阿里源</p>
 
   </div>
 </article>
@@ -158,6 +162,8 @@
          
           <li><a href="/">Home</a></li>
          
+          <li><a href="/Search/">Search</a></li>
+         
           <li><a href="/archives/">Writing</a></li>
          
           <li><a href="/about/">About</a></li>
@@ -166,7 +172,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-备份原有配置文件"><span class="toc-number">2.</span> <span class="toc-text">1.备份原有配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-新建-CentOS-Base-repo"><span class="toc-number">3.</span> <span class="toc-text">2.新建 CentOS-Base.repo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-生成缓存"><span class="toc-number">4.</span> <span class="toc-text">3.生成缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-其他的源："><span class="toc-number">5.</span> <span class="toc-text">4.其他的源：</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -205,6 +211,8 @@
       <ul>
          
           <li><a href="/">Home</a></li>
+         
+          <li><a href="/Search/">Search</a></li>
          
           <li><a href="/archives/">Writing</a></li>
          
